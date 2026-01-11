@@ -32,4 +32,5 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --allow-root
 fi
 
+echo "WordPress installed at $WP_PATH with DB $WORDPRESS_DB_NAME"
 exec php-fpm7.4 -F
