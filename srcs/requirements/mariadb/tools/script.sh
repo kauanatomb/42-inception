@@ -24,7 +24,7 @@ if [ ! -d "$DATADIR/mysql" ]; then
         GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
         ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
         FLUSH PRIVILEGES;
-EOSQL
+    EOSQL
 
     mysqladmin shutdown
     wait "$pid"
