@@ -5,11 +5,7 @@ WP_PATH="/var/www/html"
 DB_PASSWORD="$(cat /run/secrets/db_password)"
 WORDPRESS_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
 
-until mysqladmin ping \
-  -h"$WORDPRESS_DB_HOST" \
-  -u"$WORDPRESS_DB_USER" \
-  -p"$DB_PASSWORD" \
-  --silent; do
+until mysqladmin ping -h"$WORDPRESS_DB_HOST" --silent; do
     echo "Waiting for MariaDB..."
     sleep 2
 done
