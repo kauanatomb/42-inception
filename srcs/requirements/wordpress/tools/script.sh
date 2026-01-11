@@ -12,8 +12,11 @@ done
 
 if [ ! -f "$WP_PATH/wp-config.php" ]; then
     echo "Installing WordPress..."
-
-    wp core download --allow-root
+    if [ -z "$(ls -A $WP_PATH)" ]; then
+        wp core download --allow-root
+    else
+        echo "WordPress files already present, skipping download."
+    fi
 
     wp config create \
         --dbname="$WORDPRESS_DB_NAME" \
