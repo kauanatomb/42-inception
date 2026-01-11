@@ -9,6 +9,11 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
+# Configure PHP-FPM to listen on TCP (port 9000) and ensure runtime directory exists
+RUN sed -i 's|^listen = .*|listen = 9000|' /etc/php/7.4/fpm/pool.d/www.conf \
+    && mkdir -p /run/php \
+    && chown www-data:www-data /run/php
+
 # Install WP-CLI
 RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x /usr/local/bin/wp
