@@ -15,9 +15,17 @@ echo "User: $MYSQL_USER"
 
 if [ ! -d "$DATADIR/mysql" ]; then
     echo "Initializing MariaDB data directory..."
-
     mariadb-install-db --user=mysql --datadir="$DATADIR"
+    NEEDS_INIT=1
+elif [ ! -d "$DATADIR/$MYSQL_DATABASE" ]; then
+    echo "Database directory does not exist, initialization needed..."
+    NEEDS_INIT=1
+else
+    NEEDS_INIT=0
+fi
 
+if [ "$NEEDS_INIT" = "1" ]; then
+    echo "Starting temporary MariaDB for initialization..."
     mysqld --skip-networking --user=mysql &
     pid="$!"
 
@@ -38,7 +46,9 @@ EOSQL
 
     echo "Database and user created successfully"
     
-    mysqladmin shutdown -p"${MYSQL_ROOT_PASSWORD}"
+    if ! mysqladmin shutdown -p"${MYSQL_ROOT_PASSWORD}" 2>/dev/null; then
+        mysqladmin shutdown
+    fi
     wait "$pid"
     
     echo "Initialization complete"
