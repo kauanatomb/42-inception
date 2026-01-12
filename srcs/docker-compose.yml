@@ -44,8 +44,18 @@ secrets:
 volumes:
   mdb:
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ktombola/data/mariadb
+
   wp:
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ktombola/data/wordpress
+
 
 networks:
   inception_net:
