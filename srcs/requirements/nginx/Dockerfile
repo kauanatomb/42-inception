@@ -2,6 +2,7 @@ FROM debian:bullseye
 
 # install programs
 RUN apt-get update && apt-get install -y nginx openssl \
+    apt-get install -y curl \
     && rm -rf /var/lib/apt/lists/*
 
 # generate self-signed ssl certs
