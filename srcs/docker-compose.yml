@@ -33,6 +33,24 @@ services:
       - db_password
       - wp_admin_password
 
+  nginx:
+    build:
+      context: ./requirements/nginx
+      args:
+        DOMAIN_NAME: ktombola.42.fr
+    image: nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - wp:/var/www/html
+    depends_on:
+      - wordpress
+    networks:
+      - inception_net
+    restart: on-failure
+
+
 secrets:
   db_password:
     file: ../secrets/db_password.txt
