@@ -25,6 +25,7 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --dbhost="$WORDPRESS_DB_HOST" \
         --allow-root
 
+    echo "Running wp core install..."
     wp core install \
         --url="$WORDPRESS_URL" \
         --title="$WORDPRESS_TITLE" \
@@ -33,6 +34,14 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --admin_email="$WORDPRESS_ADMIN_EMAIL" \
         --skip-email \
         --allow-root
+
+    echo "Checking installation..."
+    if wp core is-installed --allow-root 2>/dev/null; then
+        echo "WordPress installation verified successfully"
+    else
+        echo "ERROR: WordPress installation failed!"
+        exit 1
+    fi
 fi
 
 echo "WordPress installed at $WP_PATH with DB $WORDPRESS_DB_NAME"
