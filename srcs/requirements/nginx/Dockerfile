@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bookworm
 
 # install programs
 RUN apt-get update && apt-get install -y nginx openssl curl \

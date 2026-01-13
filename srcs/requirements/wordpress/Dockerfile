@@ -1,16 +1,16 @@
-FROM debian:buster
+FROM debian:bookworm
 
 RUN apt-get update && apt-get install -y \
-    php7.3 \
-    php7.3-fpm \
-    php7.3-mysql \
+    php8.2 \
+    php8.2-fpm \
+    php8.2-mysql \
     mariadb-client \
     curl \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure PHP-FPM to listen on TCP (port 9000) and ensure runtime directory exists
-RUN sed -i 's|^listen = .*|listen = 9000|' /etc/php/7.3/fpm/pool.d/www.conf \
+RUN sed -i 's|^listen = .*|listen = 9000|' /etc/php/8.2/fpm/pool.d/www.conf \
     && mkdir -p /run/php \
     && chown www-data:www-data /run/php
 

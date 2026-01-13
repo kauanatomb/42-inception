@@ -36,4 +36,4 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
 fi
 
 echo "WordPress installed at $WP_PATH with DB $WORDPRESS_DB_NAME"
-exec php-fpm7.3 -F
+exec php-fpm8.2 -F
