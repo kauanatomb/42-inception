@@ -4,6 +4,7 @@ set -e
 WP_PATH="/var/www/html"
 DB_PASSWORD="$(cat /run/secrets/db_password)"
 WORDPRESS_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
+WORDPRESS_USER_PASSWORD="$(cat /run/secrets/wp_user_password)"
 
 until mysqladmin ping -h"$WORDPRESS_DB_HOST" --silent; do
     echo "Waiting for MariaDB..."
@@ -29,6 +30,14 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --admin_password="$WORDPRESS_ADMIN_PASSWORD" \
         --admin_email="$WORDPRESS_ADMIN_EMAIL" \
         --skip-email \
+        --allow-root
+
+    echo "Creating second WordPress user..."
+    wp user create \
+        "$WORDPRESS_USER" \
+        "$WORDPRESS_USER_EMAIL" \
+        --role=author \
+        --user_pass="$WORDPRESS_USER_PASSWORD" \
         --allow-root
 fi
 
