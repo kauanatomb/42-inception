@@ -1,5 +1,6 @@
 .PHONY: all up down stop start clean fclean re logs ps setup
 
+COMPOSE = docker compose
 COMPOSE_FILE = srcs/docker-compose.yml
 DATA_PATH = /home/ktombola/data
 MARIADB_DATA = $(DATA_PATH)/mariadb
@@ -16,37 +17,32 @@ setup:
 
 up:
 	@echo "Building and starting containers..."
-	docker-compose -f $(COMPOSE_FILE) up --build -d
+	$(COMPOSE) -f $(COMPOSE_FILE) up --build -d
 
 down:
 	@echo "Stopping containers..."
-	docker-compose -f $(COMPOSE_FILE) down
+	$(COMPOSE) -f $(COMPOSE_FILE) down
 
 stop:
 	@echo "Stopping containers..."
-	docker-compose -f $(COMPOSE_FILE) stop
+	$(COMPOSE) -f $(COMPOSE_FILE) stop
 
 start:
 	@echo "Starting containers..."
-	docker-compose -f $(COMPOSE_FILE) start
+	$(COMPOSE) -f $(COMPOSE_FILE) start
 
 clean: down
 	@echo "Removing containers, networks, and volumes..."
-	docker-compose -f $(COMPOSE_FILE) down -v
-	@echo "Removing unused Docker resources..."
-	docker system prune -af
+	$(COMPOSE) -f $(COMPOSE_FILE) down -v
 
 fclean: clean
 	@echo "Removing data directories..."
-	@sudo rm -rf $(DATA_PATH)
-	@echo "Removing all Docker images..."
-	@docker rmi -f $$(docker images -qa) 2>/dev/null || true
-	@docker volume rm $$(docker volume ls -q) 2>/dev/null || true
+	@sudo rm -rf $(MARIADB_DATA) $(WORDPRESS_DATA)
 
 re: fclean all
 
 logs:
-	docker-compose -f $(COMPOSE_FILE) logs -f
+	$(COMPOSE) -f $(COMPOSE_FILE) logs 
 
 ps:
-	docker-compose -f $(COMPOSE_FILE) ps
+	$(COMPOSE) -f $(COMPOSE_FILE) ps
