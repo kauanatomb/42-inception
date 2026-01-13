@@ -12,12 +12,7 @@ done
 
 if [ ! -f "$WP_PATH/wp-config.php" ]; then
     echo "Installing WordPress..."
-    if [ ! -f "$WP_PATH/wp-load.php" ]; then
-        echo "Downloading WordPress core files..."
-        wp core download --force --allow-root
-    else
-        echo "WordPress files already present, skipping download."
-    fi
+    wp core download --allow-root
 
     wp config create \
         --dbname="$WORDPRESS_DB_NAME" \
@@ -35,14 +30,6 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --admin_email="$WORDPRESS_ADMIN_EMAIL" \
         --skip-email \
         --allow-root
-
-    echo "Checking installation..."
-    if wp core is-installed --allow-root 2>/dev/null; then
-        echo "WordPress installation verified successfully"
-    else
-        echo "ERROR: WordPress installation failed!"
-        exit 1
-    fi
 fi
 
 echo "WordPress installed at $WP_PATH with DB $WORDPRESS_DB_NAME"
