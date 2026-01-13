@@ -12,8 +12,9 @@ done
 
 if [ ! -f "$WP_PATH/wp-config.php" ]; then
     echo "Installing WordPress..."
-    if [ -z "$(ls -A $WP_PATH)" ]; then
-        wp core download --allow-root
+    if [ ! -f "$WP_PATH/wp-load.php" ]; then
+        echo "Downloading WordPress core files..."
+        wp core download --force --allow-root
     else
         echo "WordPress files already present, skipping download."
     fi
