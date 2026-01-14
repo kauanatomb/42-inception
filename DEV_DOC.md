@@ -19,7 +19,6 @@ This document provides technical instructions for developers who need to set up,
 Before setting up the project, ensure your development environment has:
 
 #### System Requirements
-- Linux-based OS (recommended Debian Bookworm or Ubuntu 22.04+)
 - Minimum 4GB RAM available
 - At least 10GB free disk space
 - sudo or root access
