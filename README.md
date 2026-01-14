@@ -12,10 +12,32 @@ The project focus on understanding containerization concepts, networking, volume
 
 ### Prerequisites
 
-- Project must run in a virtual machine
-- Docker and Docker Compose installed
-- Root or sudo privileges (required for creating data directories)
+#### Virtual Machine Setup
+
+The project must run in a virtual machine with the following installed:
+
+**Desktop Environment** (for GUI access):
+- `xorg` - X Window System (display server)
+- `xfce4` - Lightweight desktop environment
+- `xfce4-goodies` - Additional XFCE4 components and tools
+- `lightdm` - Display manager (login screen)
+- `firefox-esr` - Web browser for accessing the WordPress application
+
+**Build Tools**:
+- `make` - Build automation tool
+
+**Installation example** (Debian/Ubuntu):
+```bash
+sudo apt-get update
+sudo apt-get install -y make xorg xfce4 xfce4-goodies lightdm firefox-esr
+```
+
+#### Project Requirements
+
+- Docker and Docker Compose installed on the VM
+- Root or sudo privileges (required for creating data directories and managing Docker)
 - `/etc/hosts` file configured with your domain name (e.g., `127.0.0.1 ktombola.42.fr`)
+- Internet connection (for downloading base images and packages)
 
 ### Configuration
 
@@ -132,7 +154,6 @@ The project leverages Docker's containerization technology to create isolated, p
 #### 1. Base Image Selection
 - **Debian Bookworm**: Chosen for stability, security updates, and extensive package availability
 - **Penultimate version**: Balances stability with modern features
-- **No Alpine**: While smaller, Debian provides better compatibility and documentation
 
 #### 2. Environment Variables vs Docker Secrets Strategy
 - **Environment Variables (`.env`)**: Used for non-sensitive configuration data (database names, usernames, URLs, emails, domain names)
