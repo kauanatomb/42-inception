@@ -290,7 +290,7 @@ Should show one process ID if MariaDB is running
 
 **Alternative - Check with authentication**:
 ```bash
-docker exec mariadb mysqladmin ping -u root -p$(cat secrets/db_root_password.txt) 2>/dev/null
+docker exec mariadb mysqladmin ping -u root -p$(cat secrets/db_root_password.txt)
 ```
 Should show "mysqld is alive"
 

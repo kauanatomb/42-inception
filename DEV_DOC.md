@@ -248,8 +248,11 @@ docker exec -it mariadb bash
 
 # Run MariaDB client inside the container
 docker exec -it wordpress bash
-mysql -u root db_root_password
+mysql -u root -p
+db_root_password
 SHOW DATABASES;
+USE WORDPRESS;
+SHOW TABLES;
 
 # Run WordPress CLI command
 docker exec -it wordpress bash
