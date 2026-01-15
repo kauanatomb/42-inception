@@ -23,6 +23,7 @@ down:
 	@echo "Stopping containers..."
 	$(COMPOSE) -f $(COMPOSE_FILE) down
 
+
 stop:
 	@echo "Stopping containers..."
 	$(COMPOSE) -f $(COMPOSE_FILE) stop
@@ -38,6 +39,7 @@ clean: down
 fclean: clean
 	@echo "Removing data directories..."
 	@sudo rm -rf $(MARIADB_DATA) $(WORDPRESS_DATA)
+	@docker rmi -f $$(docker images -qa) 2>/dev/null || true
 
 re: fclean all
 
